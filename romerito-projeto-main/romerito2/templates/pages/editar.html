@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block conteudo %}
+    <form action="{{url_for('editar', id=tarefa['id'])}}" method="post">
+        <label for="name"> titulo da tarefa</label> 
+        <input type="name" name="titulo" value="{{ tarefa['titulo'] }}">
+        <label for="texto"> conteudo da tarefa</label> 
+        <input type="name" name="conteudo" value="{{ tarefa['conteudo'] }}">
+        
+        <label for="data">Data de criação:</label>
+        <input type="date" name="data" value="dd/mm/yyyy">
+        <label for="limit_data">Data limite:</label>
+        <input type="date" name="limit_data" aria-valuemax="dd/mm/yyyy">
+            
+        <button>Atualizar</button>
+    </form>
+{% endblock %}
