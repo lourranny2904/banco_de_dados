@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+
+{% block conteudo %}
+
+<div class="lista_d_tarefas">
+
+
+    
+    <h2 class="tarefas">Tarefas da Categoria {{ categoria_id }}</h2>  <!-- Exibe a categoria -->
+
+    <form method="GET" action="{{ url_for('ver_tarefa') }}">
+        <label for="status">Status:</label>
+        <select name="status">
+            <option value="" class="">Todos</option>
+            <option value="Pendente" {% if status_filter == 'Pendente' %}selected{% endif %}>Pendente</option>
+            <option value="Em andamento" {% if status_filter == 'Em andamento' %}selected{% endif %}>Em andamento</option>
+            <option value="Concluída" {% if status_filter == 'Concluída' %}selected{% endif %}>Concluída</option>
+        </select>
+        
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <div class="blocos_de_trefas">
+        {% for tarefa in tarefas %}
+            <div class="tarefinhas">
+                <div class="info-tarefa">
+                    <h3 id="titulo-t">{{ tarefa['titulo'] }}</h3>
+                    <h4>{{ tarefa['conteudo'] }}</h4>
+                    <h4 class="datas">Data Inicial: {{ tarefa['data']}}</h4>
+                    <h4 class="datas">Data Limite:{{ tarefa['limit_data']}}</h4>
+                    <h4>Status: {{ tarefa['status'] }}</h4>
+                    <label>Prioridade:</label>
+    <select name="prioridade">
+        <option value="Baixa" {% if tarefa.prioridade == 'Baixa' %}selected{% endif %}>Baixa</option>
+        <option value="Média" {% if tarefa.prioridade == 'Média' %}selected{% endif %}>Média</option>
+        <option value="Alta" {% if tarefa.prioridade == 'Alta' %}selected{% endif %}>Alta</option>
+    </select>
+    
+    <label>Categoria:</label>
+    <select name="categoria">
+        <option value="Pessoal" {% if tarefa.categoria == 'Pessoal' %}selected{% endif %}>Pessoal</option>
+        <option value="Trabalho" {% if tarefa.categoria == 'Trabalho' %}selected{% endif %}>Trabalho</option>
+        <option value="Estudo" {% if tarefa.categoria == 'Estudo' %}selected{% endif %}>Estudo</option>
+    </select>
+                </div>
+
+                <div class="div-tarefa">
+                    <form action="{{ url_for('delete_user', id=tarefa['id']) }}" method="post" class="form-tarefa">
+                        <button type="submit">Apagar</button>
+                    </form>
+                    <form action="{{ url_for('editar', id=tarefa['id']) }}" method="post" class="form-tarefa">
+                        <button type="submit">Editar</button>
+                    </form>
+                    <form action="{{ url_for('concluida', id=tarefa['id']) }}" method="post" class="form-tarefa">
+                        <button type="submit">Concluir</button>
+                    </form>
+                </div>
+
+            </div>
+        {% else %}
+            <p class="tarefas">Nenhuma tarefa encontrada!</p>  <!-- Mensagem caso não haja tarefas -->
+        {% endfor %}
+    </div> 
+    <h2><a href="{{ url_for('create_tarefa', categoria=categoria_id) }}" class="tarefas">criar tarefas</a></h2>
+</div>
+
+<h2><a href="{{ url_for('index') }}" style="color:darkblue ;">Página Inicial</a></h2>
+{% endblock %}
