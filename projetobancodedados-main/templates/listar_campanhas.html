@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Campanhas{% endblock %}
+
+{% block content %}
+<h2>Lista de Campanhas</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for campanha in campanhas %}
+        <tr>
+            <td>{{ campanha[0] }}</td>
+            <td>{{ campanha[1] }}</td>
+            <td>{{ campanha[7] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
